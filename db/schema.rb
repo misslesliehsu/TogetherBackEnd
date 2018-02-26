@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180222191138) do
+ActiveRecord::Schema.define(version: 20180224192112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "date_suggestions", force: :cascade do |t|
     t.bigint "idea_id"
-    t.integer "date"
+    t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["idea_id"], name: "index_date_suggestions_on_idea_id"

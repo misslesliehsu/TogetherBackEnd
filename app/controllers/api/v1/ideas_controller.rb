@@ -1,20 +1,43 @@
 class Api::V1::IdeasController < ApplicationController
 
     def index
-      @ideas = Idea.all
-      render json: @ideas
+      #return all ideas for which current user is the owner, or an invitee
+      @ideas = Idea.all.select do |i|
+        i.owner_id == params[:user_id] ||
+        i.invitees.include?(User.find(params[:user_id]))
+      end
+      @ideas_with_dates = @ideas.map do |i|
+        jsonIdea = JSON.parse(i.to_json)
+        jsonIdea.merge({"dateSuggestions"=> i.date_suggestions})
+      end
+      render json: @ideas_with_dates
     end
 
     def show
       @idea = Idea.find(params[:id])
-      render json: @idea
+      @date_suggestions = @idea.date_suggestions
+      @packed_date_suggestions = @date_suggestions.map do |d|
+        {date: d.date, voters: d.users, id: d.id}
+      end
+      @invitees = @idea.invitees
+      @result = {idea: @idea, dateSuggestions: @packed_date_suggestions, invitees:@invitees}
+      render json: @result
     end
 
     def create
       @idea = Idea.new(idea_params)
       if @idea.valid?
         @idea.save
-        render json: @idea
+        params[:dateSuggestions].each do |d|
+          date_suggestion = DateSuggestion.new(idea_id: @idea.id, date: d)
+          date_suggestion.save if date_suggestion.valid?
+        end
+        params[:invitees].each do |i|
+          user = User.find(i["id"])
+          @idea.invitees.push(user)
+        end
+
+        render json: @idea.id
       else
         # render json: {errors: @idea.errors.full_messages}, status: 500
         render json: {errors:"uh oh can't create you"}
