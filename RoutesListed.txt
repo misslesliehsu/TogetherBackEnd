@@ -10,8 +10,10 @@ POST   /api/v1/users/:user_id/friendships(.:format)                             
 DELETE /api/v1/users/:user_id/friendships/:id(.:format)                                api/v1/friendships#destroy
 
 GET    /api/v1/ideas/:idea_id/date_suggestions/:date_suggestion_id/votes(.:format)     api/v1/votes#index
-POST   /api/v1/ideas/:idea_id/date_suggestions/:date_suggestion_id/votes(.:format)     api/v1/votes#create
-DELETE /api/v1/ideas/:idea_id/date_suggestions/:date_suggestion_id/votes/:id(.:format) api/v1/votes#destroy
+
+DELETE /api/v1/votes/:date_suggestion_id/:user_id(.:format)                            api/v1/votes#destroy
+POST   /api/v1/votes/:date_suggestion_id/:user_id(.:format)                            api/v1/votes#create
+
 GET    /api/v1/ideas/:idea_id/date_suggestions(.:format)                               api/v1/date_suggestions#index
 POST   /api/v1/ideas/:idea_id/date_suggestions(.:format)                               api/v1/date_suggestions#create
 DELETE /api/v1/ideas/:idea_id/date_suggestions/:id(.:format)                           api/v1/date_suggestions#destroy

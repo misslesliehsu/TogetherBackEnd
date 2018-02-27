@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180224192112) do
+ActiveRecord::Schema.define(version: 20180226210404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,11 +72,11 @@ ActiveRecord::Schema.define(version: 20180224192112) do
 
   create_table "votes", force: :cascade do |t|
     t.bigint "date_suggestion_id"
-    t.bigint "user_id"
+    t.bigint "voter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["date_suggestion_id"], name: "index_votes_on_date_suggestion_id"
-    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["voter_id"], name: "index_votes_on_voter_id"
   end
 
   add_foreign_key "date_suggestions", "ideas"
@@ -85,5 +85,5 @@ ActiveRecord::Schema.define(version: 20180224192112) do
   add_foreign_key "idea_comments", "users"
   add_foreign_key "invitations", "ideas"
   add_foreign_key "votes", "date_suggestions"
-  add_foreign_key "votes", "users"
+  add_foreign_key "votes", "users", column: "voter_id"
 end

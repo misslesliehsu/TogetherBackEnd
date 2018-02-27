@@ -6,11 +6,7 @@ class Api::V1::IdeasController < ApplicationController
         i.owner_id == params[:user_id] ||
         i.invitees.include?(User.find(params[:user_id]))
       end
-      @ideas_with_dates = @ideas.map do |i|
-        jsonIdea = JSON.parse(i.to_json)
-        jsonIdea.merge({"dateSuggestions"=> i.date_suggestions})
-      end
-      render json: @ideas_with_dates
+      render json: @ideas
     end
 
     def show

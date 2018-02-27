@@ -6,12 +6,13 @@ Rails.application.routes.draw do
           resources :friendships, only: [:index, :create, :destroy]
           resources :ideas do
             resources :date_suggestions, only: [:index, :create, :destroy] do
-              resources :votes, only: [:index, :create, :destroy]
             end
             resources :idea_comments, only: [:index, :create, :destroy]
           end
         end
         resources :invitations, only: [:index, :create, :destroy]
+        delete 'votes/:date_suggestion_id/:user_id', to: 'votes#destroy'
+        post 'votes/:date_suggestion_id/:user_id', to: 'votes#create'
       end
     end
   end
