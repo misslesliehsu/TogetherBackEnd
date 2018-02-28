@@ -41,10 +41,22 @@ class Api::V1::IdeasController < ApplicationController
     end
 
     def update
+      debugger
       @idea = Idea.find(params[:id])
       @idea.update(idea_params)
       if @idea.valid?
         @idea.save
+        ###Note - there is no update of invitees/invitations or dateSuggestions - only creation & destruction
+        @idea.date_suggestions.destroy_all
+        params[:dateSuggestions].each do |d|
+          date_suggestion = DateSuggestion.new(idea_id: @idea.id, date: d)
+          date_suggestion.save if date_suggestion.valid?
+        end
+        @idea.invitations.destroy_all
+        params[:invitees].each do |i|
+          user = User.find(i["id"])
+          @idea.invitees.push(user)
+        end
         render json: @idea
       else
         render json: {errors:"uh oh can't update you"}
