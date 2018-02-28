@@ -3,7 +3,7 @@ class Api::V1::IdeasController < ApplicationController
     def index
       #return all ideas for which current user is the owner, or an invitee
       @ideas = Idea.all.select do |i|
-        i.owner_id == params[:user_id] ||
+        i.owner_id == params[:user_id].to_i ||
         i.invitees.include?(User.find(params[:user_id]))
       end
       render json: @ideas
@@ -21,7 +21,7 @@ class Api::V1::IdeasController < ApplicationController
     end
 
     def create
-      @idea = Idea.new(idea_params)
+      @idea = Idea.new(name: params[:idea][:name], location: params[:idea][:location], owner_id: params[:idea][:owner_id], description: params[:idea][:description] )
       if @idea.valid?
         @idea.save
         params[:dateSuggestions].each do |d|

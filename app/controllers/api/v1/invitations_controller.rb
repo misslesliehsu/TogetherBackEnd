@@ -9,14 +9,16 @@ class Api::V1::InvitationsController < ApplicationController
     @invitations = IdeaComment.new(invitations_params)
     if @invitations.valid?
       @sinvitations.save
-      render @invitations
+      render json: @invitations
     else
       render json: "oops couldn't create you"
     end
   end
 
   def destroy
-    @invitations = IdeaComment.find(params[:id])
-    @invitations.destroy
+    debugger
+    @invitation = Invitation.find_by(invitee_id: params[:invitee_id], idea_id: params[:idea_id])
+    @invitation.destroy
+    render json: "destroyed"
   end
 end

@@ -10,9 +10,10 @@ Rails.application.routes.draw do
             resources :idea_comments, only: [:index, :create, :destroy]
           end
         end
-        resources :invitations, only: [:index, :create, :destroy]
+        resources :invitations, only: [:index, :create]
         delete 'votes/:date_suggestion_id/:user_id', to: 'votes#destroy'
         post 'votes/:date_suggestion_id/:user_id', to: 'votes#create'
+        delete 'invitations/:idea_id/:invitee_id', to: 'invitations#destroy'
       end
     end
   end
