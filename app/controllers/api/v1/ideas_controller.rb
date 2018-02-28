@@ -16,7 +16,7 @@ class Api::V1::IdeasController < ApplicationController
         {date: d.date, voters: d.users, id: d.id}
       end
       @invitees = @idea.invitees
-      @result = {idea: @idea, dateSuggestions: @packed_date_suggestions, invitees:@invitees}
+      @result = {idea: @idea, date_suggestions: @packed_date_suggestions, invitees:@invitees}
       render json: @result
     end
 
@@ -24,7 +24,7 @@ class Api::V1::IdeasController < ApplicationController
       @idea = Idea.new(name: params[:idea][:name], location: params[:idea][:location], owner_id: params[:idea][:owner_id], description: params[:idea][:description] )
       if @idea.valid?
         @idea.save
-        params[:dateSuggestions].each do |d|
+        params[:date_suggestions].each do |d|
           date_suggestion = DateSuggestion.new(idea_id: @idea.id, date: d)
           date_suggestion.save if date_suggestion.valid?
         end
@@ -41,14 +41,13 @@ class Api::V1::IdeasController < ApplicationController
     end
 
     def update
-      debugger
       @idea = Idea.find(params[:id])
       @idea.update(idea_params)
       if @idea.valid?
         @idea.save
-        ###Note - there is no update of invitees/invitations or dateSuggestions - only creation & destruction
+        ###Note - there is no update of invitees/invitations or date_suggestions - only creation & destruction
         @idea.date_suggestions.destroy_all
-        params[:dateSuggestions].each do |d|
+        params[:date_suggestions].each do |d|
           date_suggestion = DateSuggestion.new(idea_id: @idea.id, date: d)
           date_suggestion.save if date_suggestion.valid?
         end
