@@ -20,7 +20,7 @@ end
 
 
 50.times do
-  Idea.create(name: Faker::Friends.quote, location: Faker::Address.community, owner_id: User.all.sample.id, description: Faker::Seinfeld.quote)
+  Idea.create(name: Faker::Friends.quote, location: Faker::Address.community, owner_id: User.all.sample.id, description: Faker::Seinfeld.quote, scheduled_date: '')
 end
 
 
