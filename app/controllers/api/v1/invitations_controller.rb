@@ -16,7 +16,6 @@ class Api::V1::InvitationsController < ApplicationController
   end
 
   def destroy
-    debugger
     @invitation = Invitation.find_by(invitee_id: params[:invitee_id], idea_id: params[:idea_id])
     @invitation.destroy
     render json: "destroyed"

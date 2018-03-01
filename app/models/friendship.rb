@@ -9,6 +9,7 @@ class Friendship < ApplicationRecord
   end
 
   def self.destroy_reciprocal_for_ids(user_id, friend_id)
+    debugger
     friendship1 = Friendship.find_by(user_id: user_id, friend_id: friend_id)
     friendship2 = Friendship.find_by(user_id: friend_id, friend_id: user_id)
     friendship1.destroy
