@@ -14,20 +14,24 @@ Friendship.destroy_all
 User.destroy_all
 
 
-15.times do
+30.times do
   User.create(first_name: Faker::Name.first_name, last_name:Faker::Name.last_name, email: Faker::Internet.email, password: "pw")
 end
 
 
-5.times do
+50.times do
   Idea.create(name: Faker::Friends.quote, location: Faker::Address.community, owner_id: User.all.sample.id, description: Faker::Seinfeld.quote)
 end
 
 
-12.times do
-  Idea.all.sample.invitees.push(User.all.sample)
+50.times do
+  idea = Idea.all.sample
+  potentials = User.all - idea.invitees - [idea.owner]
+  idea.invitees.push(potentials.sample)
 end
 
-30.times do
-  Friendship.create_reciprocal_for_ids(User.all.sample.id, User.all.sample.id)
+100.times do
+  u = User.all.sample
+  potentials = User.all - u.friends
+  Friendship.create_reciprocal_for_ids(u.id, potentials.sample.id)
 end

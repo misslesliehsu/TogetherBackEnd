@@ -2,6 +2,14 @@ class Friendship < ApplicationRecord
   belongs_to :user
   belongs_to :friend, class_name: "User"
 
+  validate :friendship_should_not_already_exist
+
+  def friendship_should_not_already_exist
+    if self.class.where(user_id: user_id, friend_id:friend_id).exists?
+      self.errors.add(:user_id, 'Already friends!')
+    end
+  end
+
   def self.create_reciprocal_for_ids(user_id, friend_id)
     user_friendship = Friendship.create(user_id: user_id, friend_id: friend_id)
     friend_friendship = Friendship.create(user_id: friend_id, friend_id: user_id)

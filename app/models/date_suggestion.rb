@@ -4,4 +4,5 @@ class DateSuggestion < ApplicationRecord
   has_many :voters, through: :votes
 
   validates_presence_of :date
+  validates :date, uniqueness: {scope: :idea_id }
 end
