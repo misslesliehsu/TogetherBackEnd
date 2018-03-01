@@ -21,7 +21,7 @@ class Api::V1::IdeasController < ApplicationController
     end
 
     def create
-      @idea = Idea.new(name: params[:idea][:name], location: params[:idea][:location], owner_id: params[:idea][:owner_id], description: params[:idea][:description] )
+      @idea = Idea.new(name: params[:idea][:name], location: params[:idea][:location], owner_id: params[:idea][:owner_id], description: params[:idea][:description], scheduled_date: params[:idea][:scheduled_date] )
       if @idea.valid?
         @idea.save
         params[:date_suggestions].each do |d|
@@ -71,7 +71,7 @@ class Api::V1::IdeasController < ApplicationController
 
     private
     def idea_params
-      params.require(:idea).permit(:name, :location, :description, :owner_id)
+      params.require(:idea).permit(:name, :location, :description, :owner_id, :scheduled_date)
     end
 
 end
