@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'faker'
+gem 'jwt'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.5'
@@ -19,7 +20,6 @@ gem 'puma', '~> 3.7'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-
 gem "active_model_serializers"
 
 # Use Capistrano for deployment

@@ -17,7 +17,6 @@ class Api::V1::FriendshipsController < ApplicationController
 
 
   def destroy
-    debugger
     Friendship.destroy_reciprocal_for_ids(params[:user_id], params[:friend_id])
   end
 

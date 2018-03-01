@@ -17,4 +17,9 @@ Rails.application.routes.draw do
         delete 'invitations/:idea_id/:invitee_id', to: 'invitations#destroy'
       end
     end
+
+    post '/login', to: 'auth#login'
+    get '/current_user', to: 'auth#currentUser'
+    post '/signup', to: 'auth#signup'
+
   end
