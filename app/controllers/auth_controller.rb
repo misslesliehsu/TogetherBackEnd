@@ -15,7 +15,7 @@ class AuthController < ApplicationController
   def currentUser
     user = current_user
    if user
-     render json: { id: user.id, email: user.email }
+     render json: { user: user }
    else
      render json: nil
    end
