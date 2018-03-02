@@ -27,7 +27,7 @@ def signup
     begin
       user = login_user(user_params[:email], user_params[:password])
       render json: {
-        id: user.id,
+        user: user,
         token: encode_token({'user_id': user.id})
       }
     rescue AuthError => e
