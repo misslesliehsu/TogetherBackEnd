@@ -8,7 +8,7 @@ class AuthController < ApplicationController
        token: encode_token({'user_id': user.id})
      }
    rescue AuthError => e
-     render json: { error: e.msg }, status: 401
+     render json: { error: e }, status: 401
    end
   end
 
