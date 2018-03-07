@@ -50,8 +50,10 @@ class Api::V1::IdeasController < ApplicationController
         ###Note - there is no update of invitees/invitations or date_suggestions - only creation & destruction
         @idea.date_suggestions.destroy_all
         params[:date_suggestions].each do |d|
-          date_suggestion = DateSuggestion.new(idea_id: @idea.id, date: d)
-          date_suggestion.save if date_suggestion.valid?
+          if d[:date] != nil
+            date_suggestion = DateSuggestion.new(idea_id: @idea.id, date: d[:date], voters:[])
+            date_suggestion.save if date_suggestion.valid?
+          end
         end
         @idea.invitations.destroy_all
         params[:invitees].each do |i|
