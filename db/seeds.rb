@@ -6,6 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+
+require 'net/http'
+require 'open-uri'
+require 'json'
+url = 'https://randomuser.me/api/'
+uri = URI.parse(url)
+
 Invitation.destroy_all
 Vote.destroy_all
 Idea.destroy_all
@@ -13,9 +20,11 @@ DateSuggestion.destroy_all
 Friendship.destroy_all
 User.destroy_all
 
-
 30.times do
-  User.create(first_name: Faker::Name.first_name, last_name:Faker::Name.last_name, email: Faker::Internet.email, password: "pw")
+  response = Net::HTTP.get_response(uri)
+  info = JSON.parse(response.body)
+  u = User.create(first_name: Faker::Name.first_name, last_name:Faker::Name.last_name, email: Faker::Internet.email, password: "pw")
+  u.update(profile_pic: info["results"][0]["picture"]["thumbnail"])
 end
 
 
