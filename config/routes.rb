@@ -11,12 +11,13 @@ Rails.application.routes.draw do
             resources :idea_comments, only: [:index, :create, :destroy]
           end
         end
-        resources :invitations, only: [:index, :create]
+        resources :invitations, only: [:create]
         delete 'votes/:date_suggestion_id/:user_id', to: 'votes#destroy'
         post 'votes/:date_suggestion_id/:user_id', to: 'votes#create'
         delete 'invitations/:idea_id/:invitee_id', to: 'invitations#destroy'
         put 'invitations/:idea_id/:invitee_id', to: 'invitations#update'
         get 'invitations/:idea_id/:invitee_id', to: 'invitations#show'
+        get 'invitations/:user_id', to: 'invitations#index'
       end
     end
 
