@@ -1,8 +1,14 @@
 class Api::V1::InvitationsController < ApplicationController
-  def index
-    @invitations = Idea.find(params[:invitations_id])
-    @invitations = @invitations.invitations
-    render json: @invitations
+
+  def show
+    @invitation = Invitation.find_by(invitee_id: params[:invitee_id], idea_id: params[:idea_id])
+    render json: @invitation
+  end
+
+  def update
+    @invitation = Invitation.find_by(invitee_id: params[:invitee_id], idea_id: params[:idea_id])
+    @invitation.update(accepted: params[:response])
+    @invitation.save
   end
 
   def create
