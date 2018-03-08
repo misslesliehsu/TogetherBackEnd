@@ -1,5 +1,13 @@
 class Api::V1::InvitationsController < ApplicationController
 
+  def index
+    @invitations = Invitation.all.select do |i|
+      i.invitee_id == params[:user_id].to_i ||
+      idea = Idea.find(i.idea_id.to_i).owner_id == params[:user_id].to_i
+    end
+    render json: @invitations
+  end
+
   def show
     @invitation = Invitation.find_by(invitee_id: params[:invitee_id], idea_id: params[:idea_id])
     render json: @invitation
