@@ -1,24 +1,6 @@
-# README
+TOGETHER
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+DESCRIPTION:
+TOGETHER is a social app that helps friends more easily brainstorm and schedule events.  It combines the social planning aspect of Facebook Events, with the availability mechanism of Doodle, and the 'pinboard' concept of Pinterest.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This repository is the BACK end.  The FRONT end, with a complete README can be found here: https://github.com/misslesliehsu/TogetherFront
