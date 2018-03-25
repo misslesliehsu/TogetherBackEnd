@@ -1,10 +1,7 @@
 class Api::V1::InvitationsController < ApplicationController
 
   def index
-    @invitations = Invitation.all.select do |i|
-      i.invitee_id == params[:user_id].to_i ||
-      Idea.find(i.idea_id.to_i).owner_id == params[:user_id].to_i
-    end
+    @invitations = Invitation.all
     render json: @invitations
   end
 

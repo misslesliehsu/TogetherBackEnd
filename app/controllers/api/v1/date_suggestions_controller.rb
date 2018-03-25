@@ -7,7 +7,7 @@ class Api::V1::DateSuggestionsController < ApplicationController
     end
 
     def create
-      @date_suggestion = DateSuggestion.new(idea_id: params[:idea_id], date: params[:date])
+      @date_suggestion = DateSuggestion.new(idea_id: params[:idea_id], date: params[:date], friendly_date: params[:friendly_date])
       if @date_suggestion.valid?
         @sdate_suggestion.save
         render @date_suggestion

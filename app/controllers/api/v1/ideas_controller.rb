@@ -21,12 +21,12 @@ class Api::V1::IdeasController < ApplicationController
     end
 
     def create
-      @idea = Idea.new(name: params[:idea][:name], location: params[:idea][:location], owner_id: params[:idea][:owner_id], description: params[:idea][:description], scheduled_date: params[:idea][:scheduled_date] )
+      @idea = Idea.new(name: params[:idea][:name], location: params[:idea][:location], owner_id: params[:idea][:owner_id], description: params[:idea][:description], scheduled_date: params[:idea][:scheduled_date], scheduled_date_friendly: params[:idea][:scheduled_date_friendly])
       if @idea.valid?
         @idea.save
         params[:date_suggestions].each do |d|
           if d[:date] != nil
-            date_suggestion = DateSuggestion.new(idea_id: @idea.id, date: d[:date], voters: [])
+            date_suggestion = DateSuggestion.new(idea_id: @idea.id, date: d[:date], friendly_date: d[:friendly_date], voters: [])
             date_suggestion.save if date_suggestion.valid?
           end
         end
@@ -34,7 +34,6 @@ class Api::V1::IdeasController < ApplicationController
           user = User.find(i["id"])
           @idea.invitees.push(user)
         end
-
         render json: @idea.id
       else
         # render json: {errors: @idea.errors.full_messages}, status: 500
@@ -51,7 +50,7 @@ class Api::V1::IdeasController < ApplicationController
         @idea.date_suggestions.destroy_all
         params[:date_suggestions].each do |d|
           if d[:date] != nil
-            date_suggestion = DateSuggestion.new(idea_id: @idea.id, date: d[:date], voters:[])
+            date_suggestion = DateSuggestion.new(idea_id: @idea.id, date: d[:date], friendly_date: d[:friendly_date], voters: [])
             date_suggestion.save if date_suggestion.valid?
           end
         end
@@ -75,7 +74,7 @@ class Api::V1::IdeasController < ApplicationController
 
     private
     def idea_params
-      params.require(:idea).permit(:name, :location, :description, :owner_id, :scheduled_date)
+      params.require(:idea).permit(:name, :location, :description, :owner_id, :scheduled_date, :scheduled_date_friendly)
     end
 
 end
