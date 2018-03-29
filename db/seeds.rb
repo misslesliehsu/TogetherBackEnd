@@ -33,13 +33,13 @@ end
 end
 
 
-50.times do
+160.times do
   idea = Idea.all.sample
   potentials = User.all - idea.invitees - [idea.owner]
   idea.invitees.push(potentials.sample)
 end
 
-100.times do
+200.times do
   u = User.all.sample
   potentials = User.all - u.friends
   Friendship.create_reciprocal_for_ids(u.id, potentials.sample.id)

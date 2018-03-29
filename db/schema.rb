@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180307231146) do
+ActiveRecord::Schema.define(version: 20180321165659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20180307231146) do
     t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "friendly_date"
     t.index ["idea_id"], name: "index_date_suggestions_on_idea_id"
   end
 
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 20180307231146) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "scheduled_date"
+    t.string "scheduled_date_friendly"
     t.index ["owner_id"], name: "index_ideas_on_owner_id"
   end
 
