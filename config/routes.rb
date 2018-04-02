@@ -6,8 +6,7 @@ Rails.application.routes.draw do
         resources :users do
           resources :friendships, only: [:index, :create]
           resources :ideas do
-            resources :date_suggestions, only: [:index, :create, :destroy] do
-            end
+            resources :date_suggestions, only: [:index, :create, :destroy]
             resources :idea_comments, only: [:index, :create, :destroy]
           end
         end
